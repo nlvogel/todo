@@ -1,0 +1,24 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+<title>{% block title %}Add a Task{% endblock %}</title>
+{% include 'header.html' %}
+{% block content %}
+<div>
+    <div class="container" style="max-width:1000px;">
+        {% if is_edit %}
+        <h1>Edit Task</h1>
+        {% else %}
+        <h1>Add a Task</h1>
+        {% endif %}
+        <hr>
+        <div class="row">
+            <div class="mx-auto">
+                {{ ckeditor.load() }}
+                {{ ckeditor.config(name='description') }}
+                {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+                <a href="{{url_for('home')}}">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}

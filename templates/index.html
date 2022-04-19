@@ -1,0 +1,55 @@
+<title>{% block title %}Tasks Home{% endblock %}</title>
+{% include 'header.html' %}
+{% block content %}
+  <div class="container pt-5 text-center">
+    <div class="card col-5 px-0" style="display:inline-block;">
+      <h2>To do</h2>
+      <ul class="list-group list-group-flush text-start">
+        {% for task in all_tasks|sort(attribute="date") %}
+        {% if not task.completed %}
+        <li class="list-group-item">
+
+          <a href="{{url_for('complete_task', task_id=task.id)}}"><i class="bi bi-app icon-styles me-2"></i></a>{{task.name}}
+<!--            need to sort by date-->
+          <a class="ms-2 me-2" href="{{url_for('edit_task', task_id=task.id)}}"><i class="bi bi-pencil icon-styles"></i></a> |
+          <a class="ms-2" href="{{url_for('delete_task', task_id=task.id)}}"><i class="bi bi-trash icon-styles"></i></a>
+          <div class="d-flex align-items-center">
+            <button class="btn btn-secondary btn-sm mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{task.id}}" aria-expanded="false" aria-controls="collapse{{task.id}}">Description</button>
+
+            {% if task.date > today %}
+            <span class='due-date ms-2 mt-2' style="background-color:darkgreen; color:white; display:inline-block">Due {{task.date.strftime('%a, %m/%d/%y')}}</span>
+            {% elif task.date == today %}
+            <span class='due-date ms-2 mt-2' style="background-color:darkkhaki">Due today</span>
+            {% else %}
+            <span class='due-date ms-2 mt-2' style="background-color:darkred">Due {{task.date.strftime('%a, %m/%d/%y')}}</span>
+            {% endif %}
+          </div>
+          <div class="collapse" id="collapse{{task.id}}">
+          <div class="mt-2 p-description" style="display:block;">{{task.description|safe}}</div>
+            </div>
+        </li>
+        {% endif %}
+        {% endfor %}
+        <a href="{{url_for('add_a_task')}}" class="list-group-item add-task w-100 text-center">
+          <li style="list-style: none;"><i class="bi bi-plus-lg me-2"></i>Add a task</li>
+        </a>
+      </ul>
+    </div>
+    {% if any_completed %}
+    <div class="card col-5 px-0" style="display:inline-block">
+      <h2>Done</h2>
+      <ul class="list-group list-group-flush text-start" id="finished">
+        {% for task in all_tasks|sort(attribute="date") %}
+          {% if task.completed %}
+        <li class="list-group-item"><i class="bi bi-check-square me-2 icon-styles"></i>{{task.name}}<span class="ps-2"></span><a class="border-start border-dark" href="{{url_for('undo_complete_task', task_id=task.id)}}"><i class="bi bi-arrow-counterclockwise ms-2 icon-styles"></i></a>
+          <a class="ms-2 border-start border-dark" href="{{url_for('delete_task', task_id=task.id)}}"><i class="bi bi-trash icon-styles ps-3"></i></a>
+          <span style="display:block;">{{task.date.strftime('%a, %b %d, %Y')}}</span>
+        </li>
+          {% endif %}
+        {% endfor %}
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+{% include 'footer.html' %}
+{% endblock %}

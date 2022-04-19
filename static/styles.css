@@ -1,0 +1,57 @@
+span, .p-description {
+  display: inline-block;
+  font-weight: 200;
+  font-size: .75em;
+}
+
+.p-description p {
+    margin:0;
+}
+
+.badge {
+    text-decoration: none;
+}
+
+.badge:hover {
+    color: white;
+}
+
+#finished {
+  font-style: italic;
+  font-weight: 100;
+}
+
+#finished li {
+  color: darkgray;
+}
+
+.icon-styles {
+  color: cadetblue
+}
+
+.add-task {
+  margin: auto;
+  background-color: lightblue;
+  color: darkcyan;
+  text-decoration: none;
+}
+
+.add-task:hover {
+  color:lightblue;
+  background-color: darkcyan;
+}
+
+.btn-primary {
+  margin-top: 10px;
+}
+
+.due-date {
+  padding:5px 10px;
+  border-radius: 25px;
+  font-weight: 400;
+  color:white;
+}
+
+.btn-secondary {
+    font-size: 12px;
+}
